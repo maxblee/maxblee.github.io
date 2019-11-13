@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="For all but a four-year period, capital punishment has
+    been a significant component of the U.S. criminal justice system. Explore the visual history of the death
+    penalty.">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.12.0/d3.min.js" 
+        integrity="sha256-+9Mf3cAVmxxudDsr1XwXUeRZFtvdWVYdq5/vcgiYyNU=" 
+        crossorigin="anonymous">
+    </script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous">
+    </script>
+    <script src="https://unpkg.com/enter-view"></script>
+    <link rel="stylesheet" type="text/css" href="execution-graphic.css"/>
+    <title>How Have Executions Changed?</title>
+</head>
+<body>
+    <main id="main-content">
+        <div class="main-container">
+                <h1 class="graphic-heading">How have executions changed over time?</h1>
+                <p class="main-text">For almost every year since before the country was founded,
+                        the United States has executed citizens found guilty of crimes.
+                </p>
+                <br>
+                <p class="main-text">But the method in which people have been executed hasn't stayed the same.</p>
+                <br>
+                <p class="main-text">Scroll below to explore the history of the death penalty in the United States.
+                    The data for this graph comes from the 
+                    <a href="https://www.icpsr.umich.edu/icpsrweb/NACJD/studies/8451">Epsy file
+                    of executions in the United States between 1608 and 2002</a> and the
+                    <a href="https://deathpenaltyinfo.org/executions/execution-database">Death Penalty Information Center's
+                    database of executions between 1976 to 2019</a>. The historical information comes
+                    from <a href="https://www.amazon.com/Death-Penalty-American-History/dp/0674010833">
+                        <em>Death Penalty: An American History</em>
+                    </a> by Stuart Banner.
+                </p>
+                <br>
+        </div>
+        <div id="eg-container">
+            <div id="eg-svg-container">
+                <svg id="eg-svg"
+                role="img" aria-describedby="eg-svg-title eg-svg-descript">
+                    <title id="eg-svg-title">How executions have changed between 1864 and 2018</title>
+                    <!--Leaving empty at load, with intent to adapt this as we add data-->
+                    <desc id="eg-svg-descript">
+                        A line graph, depicting the total number of executions for every year between
+                        1864 and 2018, aggregated by the method of execution.
+                    </desc>
+                </svg>
+            </div>
+            <div id="eg-scroll-container">
+                    <section class="step" data-index="0">
+                        <p class="main-text">Throughout much of the 1800s, the predominant method of executions was hanging.</p>
+                        <br>
+                        <p class="main-text">Hanging, at least at first, was a public spectacle meant to instruct
+                            people of the dangers of committing crimes. But over time, it became seen as a barbaric
+                            exercise.
+                        </p>
+                        </section>
+                        <section class="step" data-index="1">
+                            <p class="main-text">By the late 1800s, people had begun seeking technological alternatives
+                                to hanging. Electrocution became a clear option; although the first death
+                                from commercial electricity was not recorded until 1881, an average of 40 people died each year between 1883 and 1888.
+                            </p>
+                            <br>
+                            <p class="main-text">In 1890, the first person, William Kemmler, was executed by electrocution.
+                                Quickly, deaths by electrocution mounted, surpassing hangings as the predominant form of execution
+                                by 1920.
+                            </p>
+                        </section>
+                        <section class="step" data-index="2">
+                            <p class="main-text">Other technological alternatives also emerged. Around the turn of the century,
+                                some people proposed lethal gas as an execution method; Nevada became the first state to adopt
+                                the practice in 1921. But gas never overtook electrocution as the dominant form of execution.
+                            </p>
+                        </section>
+                        <section class="step" data-index="3">
+                            <p class="main-text">By the 1940s, the popularity of the death penalty as a whole was declining.
+                                Especially in the North, juries were sentencing people to death less often than they had previously,
+                                replacing death sentences with prison sentences.
+                            </p>
+                            <br>
+                            <p class="main-text">Constitutional challenges to the death penalty, arguing that capital punishment
+                                was "cruel and unusual punishment" and violated the Eighth Amendment, cropped up as well. Finally,
+                                in 1972, amid a broader decline in executions, the Supreme Court declared in a 5-4 ruling that
+                                the death penalty was unconstitutional.
+                            </p>
+                        </section>
+                        <section class="step" data-index="4">
+                                <p class="main-text">Opposition to the 1972 <em>Furman v. Georgia</em> ruling came quickly. 
+                                    States soon adopted various new sentencing schemes,
+                                    hoping to get the Supreme Court to rule their adopted approaches Constitutional. 
+                                    Just three years after the case was decided, 
+                                    in 1975, 298 people were sentenced to death, the highest number for any year on record.
+                                    And in the 1976 case <em>Gregg v. Georgia</em>,
+                                    the Supreme Court affirmed sentencing schemes that gave juries
+                                    some discretion in death penalty cases, causing executions to resume.
+                                </p>
+                        </section>
+                        <section class="step" data-index="5">
+                            <p class="main-text">After <em>Gregg v. Georgia</em>, executions soon resumed and the method in which
+                            people were executed changed. Due to the hiatus from <em>Furman v. Georgia</em>, states
+                            had deteriorating infrastructure that made replacing their execution methods
+                            appear appealing financially. And lethal injection was seen as both cheap and, for the most part, painless.
+                            </p>
+                        </section>
+                        <section class="step" data-index="6">
+                            <p class="main-text">Now, once again, executions are on the decline. 
+                                <a href="https://www.nytimes.com/2019/03/12/us/california-death-penalty.html">
+                                Several states, including California,
+                                have declared a moratorium on the practice</a>, with governors arguing that
+                                the death penalty is costly and immoral.
+                            </p>
+                        </section>
+            </div>
+        </div>
+        <div id="eg-notes" class="notes-container">
+            <p class="notes">Graphic by Max Lee / Stanford Journalism Program.</p>
+            <br>
+            <p class="notes">
+                This analysis of executions in the United States comes from two sources, the Epsy File of executions
+                in the United States from 1608 to 2002 and the Death Penalty Information Center
+                data on executions from 1976 to present. In both cases, the analysis is limited
+                to executions occurring under state jurisdiction and excludes executions
+                occurring under local jurisdictions and federal jurisdiction. Prior to the 1940s, executions
+                under local jurisdictions were common, comprising <a href="https://books.google.com/books?id=XK7Bb-ars74C&pg=PA196&lpg=PA196&dq=Negley+K.+Teeters+and+Charles+J.+Zibulka+execution&source=bl&ots=WyLM8utD8u&sig=ACfU3U1tAuuPQpCKbQ6wFM5oVqLLpkfzug&hl=en&sa=X&ved=2ahUKEwj0_Zz9itLlAhUTs54KHRnTDNcQ6AEwAHoECAcQAQ#v=onepage&q=Negley%20K.%20Teeters%20and%20Charles%20J.%20Zibulka%20execution&f=false">
+                three-quarters of all executions prior to 1945.</a> However, the Epsy data from local jurisdictions
+                comes from newspaper accounts and other disparate sources and is known to be an incomplete source
+                of local capital punishment data. The state data, however, is mostly complete.
+            </p>
+            <br>
+            <p class="notes">The Epsy data is also less complete during earlier years. I focused
+                particularly on data from 1864 to present because of work Negley K. Teeters and Charles J. Zibulka
+                conducted that recorded state executions from 1864 to 1967. Epsy confirmed all of the findings
+                from Teeters and Zibulka, meaning that all of the data reported until 2002 should have been checked
+                by at least two separate sources, making the overall data recorded fairly robust and complete.
+            </p>
+            <br>
+            <p class="notes">
+                Finally, there were some disagreements between the Epsy data and the data from the Death Penalty Information Center.
+                For every year in which the number of executions reported by Epsy differed from the Death Penalty Information
+                Center figures, the Death Penalty Information Center numbers were greater.
+                This suggests that the data from the Death Penalty Information Center is slightly more complete than the Epsy data.
+                Therefore, I chose to use the Death Penalty Information Center data from 1976 - 2018, excluding
+                2019 data from the Death Penalty Information Center and all of the Epsy data occurring on or after 1976.
+            </p>
+    </div>
+    </main>
+    <script src="execution_graphic.js"></script>
+</body>
+</html>
