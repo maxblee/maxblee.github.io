@@ -1,0 +1,125 @@
+* {
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+
+body {
+  background-color: #F0F0F0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-size: calc(28px + 24 * ( (100vw - 420px) / 480));
+  color: black;
+}
+@media screen and (max-width: 420px) {
+  h1 {
+    font-size: 28px;
+  }
+}
+@media screen and (min-width: 900px) {
+  h1 {
+    font-size: 52px;
+  }
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+.main-text {
+  font-size: calc(16px + 12 * ( (100vw - 420px) / 480));
+  color: #4A4A4A;
+}
+@media screen and (max-width: 420px) {
+  .main-text {
+    font-size: 16px;
+  }
+}
+@media screen and (min-width: 900px) {
+  .main-text {
+    font-size: 28px;
+  }
+}
+
+.notes {
+  font-size: calc(16 + 6 * ( (100vw - 420px) / 480));
+  color: black;
+}
+@media screen and (max-width: 420px) {
+  .notes {
+    font-size: 16;
+  }
+}
+@media screen and (min-width: 900px) {
+  .notes {
+    font-size: 22px;
+  }
+}
+
+.eg-axis {
+  font-size: 18px;
+  color: #4A4A4A;
+}
+
+.y-axis {
+  stroke-width: 0.5;
+}
+
+.eg-label {
+  font-size: 20px;
+  color: #4A4A4A;
+  font-weight: bold;
+}
+
+.eg-label-title {
+  font-size: 26px;
+  color: #4A4A4A;
+  font-weight: bold;
+}
+
+.eg-line {
+  fill: none;
+}
+
+main {
+  width: 100%;
+  padding: 15px;
+}
+
+#eg-scroll-container {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  width: 25%;
+  top: 0px;
+  z-index: 90;
+}
+
+#eg-svg-container {
+  display: inline-block;
+  vertical-align: top;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  margin-left: 0;
+  height: 100%;
+  width: 70%;
+}
+
+.step {
+  margin-bottom: 500px;
+  height: 100%;
+}
+
+.notes-container {
+  margin-top: 20px;
+}
+
+/*# sourceMappingURL=execution-graphic.css.map */
