@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>text_data.display &#8212; Text Data 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/katex-math.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
+    <script src="../../_static/katex_autorenderer.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../../_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html">
+          Text Data</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../index.html">Max Lee Documentation Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_structure.html">How <code class="code docutils literal notranslate"><span class="pre">text_data</span></code> is organized</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../corpus.html">Corpus Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../exploration.html">Exploring Text Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">text_data</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"></ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  <h1>Source code for text_data.display</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Renders data visualizations on :class:`text_data.index.WordIndex` objects.</span>
+
+<span class="sd">The graphics in this module are designed to work across different</span>
+<span class="sd">metrics. You just have to pass them 1- or 2-dimensional numpy arrays.</span>
+
+<span class="sd">This enables you to take the outputs from any functions inside of</span>
+<span class="sd">:class:`text_data.index.WordIndex` and visualize them.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">IPython</span> <span class="kn">import</span> <span class="n">display</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># this allows for global imports. ImportError will only be raised from inside</span>
+<span class="c1"># a function decorated with `requires_display_extra`</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">altair</span> <span class="k">as</span> <span class="nn">alt</span>
+    <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="kn">from</span> <span class="nn">text_data</span> <span class="kn">import</span> <span class="n">core</span><span class="p">,</span> <span class="n">WordIndex</span>
+
+
+<div class="viewcode-block" id="render_bar_chart"><a class="viewcode-back" href="../../text_data.html#text_data.display.render_bar_chart">[docs]</a><span class="nd">@core</span><span class="o">.</span><span class="n">requires_display_extra</span>
+<span class="k">def</span> <span class="nf">render_bar_chart</span><span class="p">(</span>
+    <span class="n">labels</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span>
+    <span class="n">vector_data</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span>
+    <span class="n">x_label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Score&quot;</span><span class="p">,</span>
+    <span class="n">y_label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Word&quot;</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Renders a bar chart given a 1-dimensional numpy array.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vector_data: A 1-dimensional numpy array of floating point</span>
+<span class="sd">            scores.</span>
+<span class="sd">        labels: A 1-dimensional numpy array of labels for the bar</span>
+<span class="sd">            chart (e.g. words)</span>
+<span class="sd">        x_label: The label for your x-axis (the score).</span>
+<span class="sd">        y_label: The label for the y-axis (the words).</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If the numpy arrays have more than 1 dimension.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">vector_data</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">labels</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;You must pass a numpy array into this function&quot;</span><span class="p">)</span>
+    <span class="n">word_score_map</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="n">x_label</span><span class="p">:</span> <span class="n">vector_data</span><span class="p">,</span> <span class="n">y_label</span><span class="p">:</span> <span class="n">labels</span><span class="p">})</span>
+    <span class="n">base_chart</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">word_score_map</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">mark_bar</span><span class="p">()</span>
+        <span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+            <span class="n">x</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">x_label</span><span class="si">}</span><span class="s2">:Q&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">x_label</span><span class="p">),</span>
+            <span class="n">y</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">y_label</span><span class="si">}</span><span class="s2">:O&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">y_label</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s2">&quot;-x&quot;</span><span class="p">),</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">base_chart</span></div>
+
+
+<div class="viewcode-block" id="render_multi_bar_chart"><a class="viewcode-back" href="../../text_data.html#text_data.display.render_multi_bar_chart">[docs]</a><span class="nd">@core</span><span class="o">.</span><span class="n">requires_display_extra</span>
+<span class="k">def</span> <span class="nf">render_multi_bar_chart</span><span class="p">(</span>
+    <span class="n">labels</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span>
+    <span class="n">matrix_scores</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span>
+    <span class="n">document_names</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span>
+    <span class="n">y_label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Score&quot;</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This renders a bar chart, grouped by document, showing word-document statistics.</span>
+
+<span class="sd">    It&#39;s essentially the 2-dimensional matrix equivalent of :func:`~text_data.graphics.render_bar_chart`.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        labels: A 2-dimensional numpy array of words, like those passed from</span>
+<span class="sd">            :meth:`text_data.index.get_top_scores`.</span>
+<span class="sd">        matrix_scores: A 2-dimensional numpy array of scores, like those</span>
+<span class="sd">            passed from :meth:`text_data.index.get_top_scores`.</span>
+<span class="sd">        document_names: A list of names for the documents. If :code:`None`,</span>
+<span class="sd">            this will display numbers incrementing from 0.</span>
+<span class="sd">        y_label: The name for the y label (where the scores go).</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If your labels or your axes aren&#39;t 2 dimensional or</span>
+<span class="sd">            aren&#39;t of the same size.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">labels</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">matrix_scores</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;You must pass labels and matrixes with 2 dimensions&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">labels</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">matrix_scores</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Your labels and matrixes must have the same dimensions&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">document_names</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">document_names</span><span class="p">)</span> <span class="o">!=</span> <span class="n">labels</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Your list of document names must be equal to the number of documents&quot;</span>
+        <span class="p">)</span>
+    <span class="n">base_frame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+    <span class="c1"># iterate through columns appending to dataframe</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">labels</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="n">doc_name</span> <span class="o">=</span> <span class="n">col</span> <span class="k">if</span> <span class="n">document_names</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">document_names</span><span class="p">[</span><span class="n">col</span><span class="p">]</span>
+        <span class="n">col_frame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;Word&quot;</span><span class="p">:</span> <span class="n">labels</span><span class="p">[:,</span> <span class="n">col</span><span class="p">],</span>
+                <span class="s2">&quot;Document&quot;</span><span class="p">:</span> <span class="n">doc_name</span><span class="p">,</span>
+                <span class="n">y_label</span><span class="p">:</span> <span class="n">matrix_scores</span><span class="p">[:,</span> <span class="n">col</span><span class="p">],</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+        <span class="n">base_frame</span> <span class="o">=</span> <span class="n">base_frame</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">col_frame</span><span class="p">)</span>
+    <span class="n">base_chart</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">base_frame</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">mark_bar</span><span class="p">()</span>
+        <span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">y_label</span><span class="si">}</span><span class="s2">:Q&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Document:O&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;Document:O&quot;</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="s2">&quot;Word:O&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">base_chart</span></div>
+
+<div class="viewcode-block" id="histogram"><a class="viewcode-back" href="../../text_data.html#text_data.display.histogram">[docs]</a><span class="nd">@core</span><span class="o">.</span><span class="n">requires_display_extra</span>
+<span class="k">def</span> <span class="nf">histogram</span><span class="p">(</span>
+    <span class="n">values</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span>
+    <span class="n">x_label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Score&quot;</span><span class="p">,</span>
+    <span class="n">y_label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Number of Documents&quot;</span><span class="p">,</span>
+    <span class="n">x_scale</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;linear&quot;</span><span class="p">,</span>
+    <span class="n">y_scale</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;linear&quot;</span><span class="p">,</span>
+    <span class="n">max_bins</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Displays a histogram of values.</span>
+
+<span class="sd">    This can be really useful for debugging the lengths of documents.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        values: A numpy array of quantitative values.</span>
+<span class="sd">        x_label: A label for the x-axis.</span>
+<span class="sd">        y_label: A label for the y-axis.</span>
+<span class="sd">        x_scale: A continuous scale type, defined by `altair &lt;https://altair-viz.github.io/user_guide/generated/core/altair.Scale.html&gt;`_.</span>
+<span class="sd">        y_scale: A continuous scale type, defined by `altair &lt;https://altair-viz.github.io/user_guide/generated/core/altair.Scale.html&gt;`_.</span>
+<span class="sd">        max_bins: The maximum number of histogram bins.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">x_label</span><span class="si">}</span><span class="s2">:Q&quot;</span><span class="p">,</span> <span class="nb">bin</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Bin</span><span class="p">(</span><span class="n">maxbins</span><span class="o">=</span><span class="n">max_bins</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="n">x_label</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">x_scale</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="s2">&quot;count()&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">y_label</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">y_scale</span><span class="p">))</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="n">x_label</span><span class="p">:</span> <span class="n">values</span><span class="p">}))</span>
+        <span class="o">.</span><span class="n">mark_bar</span><span class="p">()</span>
+        <span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+    <span class="p">)</span></div>
+
+<div class="viewcode-block" id="heatmap"><a class="viewcode-back" href="../../text_data.html#text_data.display.heatmap">[docs]</a><span class="nd">@core</span><span class="o">.</span><span class="n">requires_display_extra</span>
+<span class="k">def</span> <span class="nf">heatmap</span><span class="p">(</span>
+    <span class="n">distance_matrix</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span>
+    <span class="n">left_indexes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">right_indexes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">left_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Left&quot;</span><span class="p">,</span>
+    <span class="n">right_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Right&quot;</span><span class="p">,</span>
+    <span class="n">metric_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Similarity&quot;</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Displays a heatmap displaying scores across a 2-dimensional matrix.</span>
+
+<span class="sd">    The purpose of this is to visually gauge which documents</span>
+<span class="sd">    are closest to each other given two sets of documents. (If you only have one</span>
+<span class="sd">    set of documents, the left and right can be the same.) The visual rendering</span>
+<span class="sd">    here is inspired by</span>
+<span class="sd">    `tensorflow&#39;s Universal Sentence Encoder documentation &lt;https://www.tensorflow.org/hub/tutorials/semantic_similarity_with_tf_hub_universal_encoder&gt;`_.</span>
+<span class="sd">    But, while you can use a universal sentence encoder to create the heatmap,</span>
+<span class="sd">    you can also easily use any of the metrics in scikit&#39;s</span>
+<span class="sd">    `pairwise_distances function &lt;https://scikit-learn.org/stable/modules/generated/sklearn.metrics.pairwise_distances.html#sklearn.metrics.pairwise_distances&gt;`_.</span>
+<span class="sd">    Or, indeed, any other 2-dimensional matrix of floats will do the trick.</span>
+
+<span class="sd">    Note that the :code:`left_name` and :code:`right_name` must be different. In order to account</span>
+<span class="sd">    for this, this function automatically adds a suffix to both names if they are the same.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        distance_matrix: A distance matrix of size M x N where M is the number of</span>
+<span class="sd">            documents on the left side and N is the number of documents on the right side.</span>
+<span class="sd">        left_indexes: Labels for the left side (the Y axis)</span>
+<span class="sd">        right_indexes: Labels for the right side (the X axis)</span>
+<span class="sd">        left_name: The Y axis label</span>
+<span class="sd">        right_name: The X axis label</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If the side of the indexes doesn&#39;t match the shape of the matrix</span>
+<span class="sd">            of if there are not 2 dimensions in the distance matrix.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">distance_matrix</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;You must supply a 2-dimensional numpy array.&quot;</span><span class="p">)</span>
+    <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">distance_matrix</span><span class="p">)</span>
+    <span class="c1"># raise an error if the size of the indexes don&#39;t match</span>
+    <span class="k">if</span> <span class="n">left_indexes</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">left_indexes</span><span class="p">)</span> <span class="o">!=</span> <span class="n">rows</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="p">(</span>
+                <span class="s2">&quot;The length of the indexes must match the number of rows in the distance matrix.&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">rows</span><span class="si">}</span><span class="s2"> does not match </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">left_indexes</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="n">right_indexes</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">right_indexes</span><span class="p">)</span> <span class="o">!=</span> <span class="n">cols</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="p">(</span>
+                <span class="s2">&quot;The length of the columns must match the number of columns in the distance matrix.&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cols</span><span class="si">}</span><span class="s2"> does not match </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">right_indexes</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="c1"># because the data is in a dictionary, the left and right names must be different</span>
+    <span class="k">if</span> <span class="n">left_name</span> <span class="o">==</span> <span class="n">right_name</span><span class="p">:</span>
+        <span class="n">left_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">left_name</span><span class="si">}</span><span class="s2">_0&quot;</span>
+        <span class="n">right_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">right_name</span><span class="si">}</span><span class="s2">_1&quot;</span>
+    <span class="c1"># set the labels for the heatmap</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">left_indexes</span> <span class="k">if</span> <span class="n">left_indexes</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">range</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="n">right_indexes</span> <span class="k">if</span> <span class="n">right_indexes</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">range</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span><span class="n">left_name</span><span class="p">:</span> <span class="n">row</span><span class="p">,</span> <span class="n">right_name</span><span class="p">:</span> <span class="n">column</span><span class="p">,</span> <span class="n">metric_name</span><span class="p">:</span> <span class="n">distance_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]}</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">column</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span>
+    <span class="p">]</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="n">data</span><span class="p">))</span>
+        <span class="o">.</span><span class="n">mark_rect</span><span class="p">()</span>
+        <span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+            <span class="n">y</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">left_name</span><span class="si">}</span><span class="s2">:O&quot;</span><span class="p">,</span>
+            <span class="n">x</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">right_name</span><span class="si">}</span><span class="s2">:O&quot;</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">metric_name</span><span class="si">}</span><span class="s2">:Q&quot;</span><span class="p">,</span>
+            <span class="n">tooltip</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">left_name</span><span class="si">}</span><span class="s2">:O&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">right_name</span><span class="si">}</span><span class="s2">:O&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">metric_name</span><span class="si">}</span><span class="s2">:Q&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="frequency_map"><a class="viewcode-back" href="../../text_data.html#text_data.display.frequency_map">[docs]</a><span class="nd">@core</span><span class="o">.</span><span class="n">requires_display_extra</span>
+<span class="k">def</span> <span class="nf">frequency_map</span><span class="p">(</span>
+    <span class="n">index</span><span class="p">:</span> <span class="n">WordIndex</span><span class="p">,</span>
+    <span class="n">word_vector</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span>
+    <span class="n">x_label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Word Frequency&quot;</span><span class="p">,</span>
+    <span class="n">y_label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Score&quot;</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A scatterplot scores over a corpus to their underlying frequencies.</span>
+
+<span class="sd">    I cribbed this idea from `Monroe et al 2008 &lt;http://languagelog.ldc.upenn.edu/myl/Monroe.pdf&gt;`_,</span>
+<span class="sd">    a great paper that uses it to show distributional problems in metrics that are trying to compare</span>
+<span class="sd">    two things.</span>
+
+<span class="sd">    The basic idea is that by creating a scatter plot mapping the frequencies of words</span>
+<span class="sd">    to scores, you can both figure out which scores are disproportionately high</span>
+<span class="sd">    or low *and* identify bias in whether your metric is excessively favoring common or rare words.</span>
+
+<span class="sd">    In order to render this graphic, your word vector has to conform to the number of words</span>
+<span class="sd">    in your index. If you feel the need to remove words to make the graphic</span>
+<span class="sd">    manageable to look at, consider using :meth:`text_data.index.WordIndex.skip_words`.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        index: A :class:`text_data.index.WordIndex` object. This is used to get the</span>
+<span class="sd">            overall frequencies.</span>
+<span class="sd">        word_vector: A 1-dimensional numpy array with floating point scores.</span>
+<span class="sd">        x_label: The name of the x label for your graphic.</span>
+<span class="sd">        y_label: The name of the y label for your graphic.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If the word_vector doesn&#39;t have 1 dimension or if the vector</span>
+<span class="sd">            isn&#39;t the same length as your vocabulary.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">word_vector</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="n">index</span><span class="o">.</span><span class="n">vocab_size</span><span class="p">,):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;You must enter a 1-dimensional array&quot;</span><span class="p">)</span>
+    <span class="n">df_rendering</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;Word&quot;</span><span class="p">:</span> <span class="n">index</span><span class="o">.</span><span class="n">vocab_list</span><span class="p">,</span>
+            <span class="n">x_label</span><span class="p">:</span> <span class="n">index</span><span class="o">.</span><span class="n">word_freq_vector</span><span class="p">(),</span>
+            <span class="n">y_label</span><span class="p">:</span> <span class="n">word_vector</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">df_rendering</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">mark_point</span><span class="p">()</span>
+        <span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+            <span class="n">x</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">x_label</span><span class="si">}</span><span class="s2">:Q&quot;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mi">10</span><span class="p">)),</span>
+            <span class="n">y</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">y_label</span><span class="si">}</span><span class="s2">:Q&quot;</span><span class="p">,</span>
+            <span class="n">tooltip</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">df_rendering</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span>
+        <span class="p">)</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="display_score_tables"><a class="viewcode-back" href="../../text_data.html#text_data.display.display_score_tables">[docs]</a><span class="k">def</span> <span class="nf">display_score_tables</span><span class="p">(</span>
+    <span class="n">words</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">scores</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">table_names</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Renders two score tables.</span>
+
+<span class="sd">    This is the 2-dimensional equivalent of</span>
+<span class="sd">    :func:`~text_data.index.display_score_table` for details.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        words: A 2-dimensional matrix of words</span>
+<span class="sd">        scores: A 2-dimensional matrix of scores</span>
+<span class="sd">        table_names: A list of names for your corresponding tables.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If :code:`words` and :code:`scores` aren&#39;t both 2-dimensional</span>
+<span class="sd">            arrays of the same shape, or if :code:`table_names`</span>
+<span class="sd">            isn&#39;t of the same length as the number of documents.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">words</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">scores</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The word and score matrixes must be 2-dimensional.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">words</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">scores</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Both matrix arguments must be of the same shape.&quot;</span><span class="p">)</span>
+    <span class="n">_rows</span><span class="p">,</span> <span class="n">cols</span> <span class="o">=</span> <span class="n">words</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">table_names</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cols</span><span class="p">))))</span> <span class="k">if</span> <span class="n">table_names</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">table_names</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">table_names</span><span class="p">)</span> <span class="o">!=</span> <span class="n">cols</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;There must be as many table names as there are columns&quot;</span><span class="p">)</span>
+    <span class="n">html</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">doc_words</span><span class="p">,</span> <span class="n">doc_scores</span><span class="p">,</span> <span class="n">table_name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">scores</span><span class="p">,</span> <span class="n">table_names</span><span class="p">):</span>
+        <span class="n">html</span> <span class="o">+=</span> <span class="n">display_score_table</span><span class="p">(</span><span class="n">doc_words</span><span class="p">,</span> <span class="n">doc_scores</span><span class="p">,</span> <span class="n">table_name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">display</span><span class="o">.</span><span class="n">HTML</span><span class="p">(</span><span class="n">html</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="display_score_table"><a class="viewcode-back" href="../../text_data.html#text_data.display.display_score_table">[docs]</a><span class="k">def</span> <span class="nf">display_score_table</span><span class="p">(</span>
+    <span class="n">words</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">scores</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">table_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Top Scores&quot;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Returns the top (or bottom scores) as a table.</span>
+
+<span class="sd">    It requires a 1-dimensional numpy array of the scores and the words,</span>
+<span class="sd">    much as you would receive from</span>
+<span class="sd">    :meth:`text_data.index.WordIndex.get_top_words`. For a 2-dimensional</span>
+<span class="sd">    equivalent, use :meth:`~text_data.display.display_score_tables`.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        words: A 1-dimensional numpy array of words.</span>
+<span class="sd">        scores: A 1-dimensional numpy array of corresponding scores.</span>
+<span class="sd">        table_name: The name to give your table.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If you did not use a 1-dimensional array, or if the</span>
+<span class="sd">            two arrays don&#39;t have identical shapes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">words</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">scores</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The shape of the words and scores must be the same&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">words</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">scores</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Both words and scores must have 1 dimension&quot;</span><span class="p">)</span>
+    <span class="n">html</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;&lt;p&gt;&lt;b&gt;</span><span class="si">{</span><span class="n">core</span><span class="o">.</span><span class="n">_escape_html</span><span class="p">(</span><span class="n">table_name</span><span class="p">)</span><span class="si">}</span><span class="s2">&lt;/b&gt;&lt;/p&gt;&quot;</span>
+        <span class="s2">&quot;&lt;table&gt;&quot;</span>
+        <span class="s2">&quot;&lt;thead&gt;&quot;</span>
+        <span class="s2">&quot;&lt;tr&gt;&lt;th&gt;Order&lt;/th&gt;&lt;th&gt;Word&lt;/th&gt;&lt;th&gt;Score&lt;/th&gt;&lt;/tr&gt;&quot;</span>
+        <span class="s2">&quot;&lt;/thead&gt;&quot;</span>
+        <span class="s2">&quot;&lt;tbody&gt;&quot;</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">count</span><span class="p">,</span> <span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">score</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">scores</span><span class="p">)):</span>
+        <span class="n">html</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;&lt;tr&gt;&lt;td&gt;</span><span class="si">{</span><span class="n">count</span> <span class="o">+</span> <span class="mi">1</span><span class="si">}</span><span class="s2">.&lt;/td&gt;&lt;td&gt;</span><span class="si">{</span><span class="n">core</span><span class="o">.</span><span class="n">_escape_html</span><span class="p">(</span><span class="n">word</span><span class="p">)</span><span class="si">}</span><span class="s2">&lt;/td&gt;&lt;td&gt;</span><span class="si">{</span><span class="n">score</span><span class="si">}</span><span class="s2">&lt;/td&gt;&lt;/tr&gt;&quot;</span>
+    <span class="n">html</span> <span class="o">+=</span> <span class="s2">&quot;&lt;/tbody&gt;&lt;/table&gt;&quot;</span>
+    <span class="k">return</span> <span class="n">display</span><span class="o">.</span><span class="n">HTML</span><span class="p">(</span><span class="n">html</span><span class="p">)</span></div>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2020, Max Lee.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>text_data.query &#8212; Text Data 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/katex-math.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
+    <script src="../../_static/katex_autorenderer.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../../_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html">
+          Text Data</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../index.html">Max Lee Documentation Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_structure.html">How <code class="code docutils literal notranslate"><span class="pre">text_data</span></code> is organized</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../corpus.html">Corpus Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../exploration.html">Exploring Text Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">text_data</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"></ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  <h1>Source code for text_data.query</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;This builds and runs search queries for :class:`text_data.index.Corpus`.</span>
+
+<span class="sd">For the most part, you won&#39;t be using this directly. Instead, you&#39;ll likely</span>
+<span class="sd">be using :class:`text_data.index.Corpus`. However, viewing the :code:`__repr__`</span>
+<span class="sd">for the query you&#39;re running can be helpful for debugging or validating</span>
+<span class="sd">queries.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">List</span>
+
+<span class="n">QUERY_TERMS</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;AND&quot;</span><span class="p">,</span> <span class="s2">&quot;OR&quot;</span><span class="p">,</span> <span class="s2">&quot;NOT&quot;</span><span class="p">}</span>
+<span class="c1">#: This represents an set of words you want to search for.</span>
+<span class="c1">#:</span>
+<span class="c1">#: Each query item has attached to it a set of words,</span>
+<span class="c1">#: an identifier stating whether the query terms are part of</span>
+<span class="c1">#: an exact phrase (i.e. whether the order matters)</span>
+<span class="c1">#: and what kind of query (a boolean AND query, a boolean OR query, or a boolean NOT query),</span>
+<span class="c1">#: is being performed on the query.</span>
+<span class="c1">#:</span>
+<span class="c1">#: Args:</span>
+<span class="c1">#:      words (List[str]): A list of words representing all of the words that will be searched for.</span>
+<span class="c1">#:      exact (bool): Whether the search terms are part of an exact phrase match</span>
+<span class="c1">#:      modifier (str): The boolean query (AND, OR, or NOT)</span>
+<span class="n">QueryItem</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;QueryItem&quot;</span><span class="p">,</span> <span class="s2">&quot;words exact modifier&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Query"><a class="viewcode-back" href="../../text_data.html#text_data.query.Query">[docs]</a><span class="k">class</span> <span class="nc">Query</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Represents a query. This is used internaly by :class:`text_data.index.Corpus` to handle searching.</span>
+
+<span class="sd">    The basic formula for writing queries should be familiar; all of the</span>
+<span class="sd">    queries are simple boolean phrases. But here are more complete specifications:</span>
+
+<span class="sd">    In order to search for places where two words appeared, you simply need</span>
+<span class="sd">    to type the two words::</span>
+
+<span class="sd">        Query(&quot;i am&quot;)</span>
+
+<span class="sd">    Searches using this query will look for documents where the words &quot;i&quot;</span>
+<span class="sd">    and &quot;am&quot; both appeared. To have them look for places where either</span>
+<span class="sd">    word appeared, use an &quot;OR&quot; query::</span>
+
+<span class="sd">        Query(&quot;i OR am&quot;)</span>
+
+<span class="sd">    Alternatively, you can look for documents where one word occurred but the other</span>
+<span class="sd">    didn&#39;t using a NOT query::</span>
+
+<span class="sd">        Query(&quot;i NOT am&quot;)</span>
+
+<span class="sd">    To search for places where the phrase &quot;i am&quot; appeared, use quotes::</span>
+
+<span class="sd">        Query(&quot;&#39;i am&#39;&quot;)</span>
+
+<span class="sd">    You can use AND queries to limit the results of previous sets of queries.</span>
+<span class="sd">    For instance::</span>
+
+<span class="sd">        Query(&quot;i OR am AND you&quot;)</span>
+
+<span class="sd">    will find places where &quot;you&quot; and *either* &quot;I&quot; or &quot;am&quot; appeared.</span>
+
+<span class="sd">    In order to search for the literal words &#39;AND&#39;, &#39;OR&#39;, or &#39;NOT&#39;,</span>
+<span class="sd">    you must encapsulate them in quotes::</span>
+
+<span class="sd">        Query(&quot;&#39;AND&#39;&quot;)</span>
+
+<span class="sd">    Finally, you may customize the way your queries are parsed by passing</span>
+<span class="sd">    a tokenizer. By default, :code:`Query` identifies strings of text</span>
+<span class="sd">    that it needs to split and uses :code:`str.split` to split the strings.</span>
+<span class="sd">    But you can change how to split the text, which can be helpful/necessary</span>
+<span class="sd">    if the words you&#39;re searching for have spaces in them. For instance,</span>
+<span class="sd">    this will split the words you&#39;re querying by spaces, unless the words</span>
+<span class="sd">    are &#39;united states&#39;::</span>
+
+<span class="sd">        &gt;&gt;&gt; import re</span>
+<span class="sd">        &gt;&gt;&gt; us_phrase = re.compile(r&quot;(united states|\S+)&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; Query(&quot;he is from the united states&quot;, query_tokenizer=us_phrase.findall)</span>
+<span class="sd">        &lt;Query ([[QueryItem(words=[&#39;he&#39;, &#39;is&#39;, &#39;from&#39;, &#39;the&#39;, &#39;united states&#39;], exact=False, modifier=&#39;OR&#39;)]])&gt;</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        query_string: The human-readable query</span>
+<span class="sd">        query_tokenizer: A function to tokenize phrases in the query</span>
+<span class="sd">            (Defaults to string.split).</span>
+<span class="sd">            **Note:** This specifically tokenizes individual phrases in the query.</span>
+<span class="sd">            As a result, the function does not need to handle quotations.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">query_string</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">query_tokenizer</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">str</span><span class="o">.</span><span class="n">split</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="c1"># starting with a key word should raise an error</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">fr</span><span class="s2">&quot;^\s*(</span><span class="si">{</span><span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">QUERY_TERMS</span><span class="p">)</span><span class="si">}</span><span class="s2">)(?:\s+|$)&quot;</span><span class="p">,</span> <span class="n">query_string</span><span class="p">)</span>
+            <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;You cannot use a keyword at the beginning of the query&quot;</span><span class="p">)</span>
+        <span class="c1"># this holds outputs of queries, as set objects</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">queries</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">raw_query</span> <span class="o">=</span> <span class="n">query_string</span>
+        <span class="n">current_idx</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># set the first</span>
+        <span class="n">last_modifier</span> <span class="o">=</span> <span class="s2">&quot;OR&quot;</span>
+        <span class="n">term_regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">fr</span><span class="s2">&quot;\s+(</span><span class="si">{</span><span class="s1">&#39;|&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">QUERY_TERMS</span><span class="p">)</span><span class="si">}</span><span class="s2">)\s+&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">term_regex</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="n">query_string</span><span class="p">):</span>
+            <span class="n">query_items</span> <span class="o">=</span> <span class="n">query_string</span><span class="p">[</span><span class="n">current_idx</span> <span class="p">:</span> <span class="n">term</span><span class="o">.</span><span class="n">start</span><span class="p">()]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">queries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_parse_subquery</span><span class="p">(</span><span class="n">query_items</span><span class="p">,</span> <span class="n">last_modifier</span><span class="p">,</span> <span class="n">query_tokenizer</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">last_modifier</span> <span class="o">=</span> <span class="n">term</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">current_idx</span> <span class="o">=</span> <span class="n">term</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
+        <span class="n">end_query</span> <span class="o">=</span> <span class="n">query_string</span><span class="p">[</span><span class="n">current_idx</span><span class="p">:]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">queries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parse_subquery</span><span class="p">(</span><span class="n">end_query</span><span class="p">,</span> <span class="n">last_modifier</span><span class="p">,</span> <span class="n">query_tokenizer</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_parse_subquery</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">last_modifier</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">query_tokenizer</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">str</span><span class="o">.</span><span class="n">split</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">QueryItem</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;This parses queries between QUERY_TERM objects. Internal to init.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            query: The subquery</span>
+<span class="sd">            last_modifier: Specifies the last query term that was used (or OR if none)</span>
+<span class="sd">            query_tokenizer: Passed directly from __init__</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">matches</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">current_idx</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">quote_regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+            <span class="sa">r</span><span class="s2">&quot;(?:\s|^)(\&#39;(?P&lt;single&gt;[^\&#39;]+)\&#39;|</span><span class="se">\&quot;</span><span class="s2">(?P&lt;double&gt;[^</span><span class="se">\&quot;</span><span class="s2">]+)</span><span class="se">\&quot;</span><span class="s2">)(?:\s|$)&quot;</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">exact_match</span> <span class="ow">in</span> <span class="n">quote_regex</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="n">query</span><span class="p">):</span>
+            <span class="n">single_quote</span> <span class="o">=</span> <span class="n">exact_match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s2">&quot;single&quot;</span><span class="p">)</span>
+            <span class="n">double_quote</span> <span class="o">=</span> <span class="n">exact_match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s2">&quot;double&quot;</span><span class="p">)</span>
+            <span class="n">quoted_matl</span> <span class="o">=</span> <span class="n">single_quote</span> <span class="k">if</span> <span class="n">single_quote</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">double_quote</span>
+            <span class="n">pre_match</span> <span class="o">=</span> <span class="n">query</span><span class="p">[</span><span class="n">current_idx</span> <span class="p">:</span> <span class="n">exact_match</span><span class="o">.</span><span class="n">start</span><span class="p">()]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">pre_match</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                <span class="n">matches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">QueryItem</span><span class="p">(</span><span class="n">query_tokenizer</span><span class="p">(</span><span class="n">pre_match</span><span class="p">),</span> <span class="kc">False</span><span class="p">,</span> <span class="n">last_modifier</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="n">matches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">QueryItem</span><span class="p">(</span><span class="n">query_tokenizer</span><span class="p">(</span><span class="n">quoted_matl</span><span class="p">),</span> <span class="kc">True</span><span class="p">,</span> <span class="n">last_modifier</span><span class="p">))</span>
+            <span class="n">current_idx</span> <span class="o">=</span> <span class="n">exact_match</span><span class="o">.</span><span class="n">end</span><span class="p">()</span>
+        <span class="n">post_match</span> <span class="o">=</span> <span class="n">query</span><span class="p">[</span><span class="n">current_idx</span><span class="p">:]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">post_match</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="n">matches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">QueryItem</span><span class="p">(</span><span class="n">query_tokenizer</span><span class="p">(</span><span class="n">post_match</span><span class="p">),</span> <span class="kc">False</span><span class="p">,</span> <span class="n">last_modifier</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">matches</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&lt;Query (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">queries</span><span class="si">}</span><span class="s2">)&gt;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_query</span></div>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2020, Max Lee.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

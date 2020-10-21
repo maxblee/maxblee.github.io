@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Getting Started &#8212; Text Data 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/katex-math.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
+    <script src="_static/katex_autorenderer.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Corpus Structure" href="corpus.html" />
+    <link rel="prev" title="How text_data is organized" href="api_structure.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          Text Data</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Max Lee Documentation Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_structure.html">How <code class="code docutils literal notranslate"><span class="pre">text_data</span></code> is organized</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="corpus.html">Corpus Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exploration.html">Exploring Text Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">text_data</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Getting Started</a><ul>
+<li><a class="reference internal" href="#id2">Getting Started</a></li>
+<li><a class="reference internal" href="#setting-up-the-data">Setting up the Data</a></li>
+<li><a class="reference internal" href="#creating-a-corpus">Creating a <code class="xref py py-class docutils literal notranslate"><span class="pre">Corpus</span></code></a></li>
+<li><a class="reference internal" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="api_structure.html" title="Previous Chapter: How text_data is organized"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; How text_data...</span>
+    </a>
+  </li>
+  <li>
+    <a href="corpus.html" title="Next Chapter: Corpus Structure"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Corpus Structure &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="_sources/getting_started.rst.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  <div class="section" id="getting-started">
+<span id="id1"></span><h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id2">
+<h2>Getting Started<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>To get started, I’m going to assume you followed the
+<a class="reference internal" href="installation.html#installation"><span class="std std-ref">Installation</span></a> guide, both installing <code class="code docutils literal notranslate"><span class="pre">text_data</span></code>
+and its optional dependencies and downloading the State of the Union
+Corpus. I’m also going to assume you’re using Jupyter or some other
+interactive Python environment that lets you visually render the results of your code.
+(Assuming you plan on following along.)</p>
+</div>
+<div class="section" id="setting-up-the-data">
+<h2>Setting up the Data<a class="headerlink" href="#setting-up-the-data" title="Permalink to this headline">¶</a></h2>
+<p>Let’s get started by loading the State of the Union data into
+<code class="code docutils literal notranslate"><span class="pre">pandas</span></code>. This isn’t strictly necessary for <code class="code docutils literal notranslate"><span class="pre">text_data</span></code>,
+but it will make our lives a little bit easier.</p>
+<p>The State of the Union speeches are each held in separate files
+within the directory, each in the format <code class="code docutils literal notranslate"><span class="pre">&quot;name_year.text&quot;</span></code>. So here’s what
+the code loading the files in looks like:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="k">def</span> <span class="nf">load_data</span><span class="p">():</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;sotu-data/*.txt&quot;</span><span class="p">)</span>
+    <span class="n">path_desc</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;sotu-data/([A-Za-z]+)_([0-9]</span><span class="si">{4}</span><span class="s2">)\.txt&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">filepath</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">raw_text</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">president</span><span class="p">,</span> <span class="n">year</span> <span class="o">=</span> <span class="n">path_desc</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+        <span class="k">yield</span> <span class="p">{</span><span class="s2">&quot;president&quot;</span><span class="p">:</span> <span class="n">president</span><span class="p">,</span> <span class="s2">&quot;year&quot;</span><span class="p">:</span> <span class="n">year</span><span class="p">,</span> <span class="s2">&quot;speech&quot;</span><span class="p">:</span> <span class="n">raw_text</span><span class="p">}</span>
+
+<span class="n">sotu_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">load_data</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>From here, we can get started using <code class="code docutils literal notranslate"><span class="pre">text_data</span></code>.</p>
+</div>
+<div class="section" id="creating-a-corpus">
+<h2>Creating a <a class="reference internal" href="text_data.html#text_data.index.Corpus" title="text_data.index.Corpus"><code class="xref py py-class docutils literal notranslate"><span class="pre">Corpus</span></code></a><a class="headerlink" href="#creating-a-corpus" title="Permalink to this headline">¶</a></h2>
+<p>Over the rest of this tutorial, I’ll be going over what
+a <a class="reference internal" href="text_data.html#text_data.index.Corpus" title="text_data.index.Corpus"><code class="xref py py-class docutils literal notranslate"><span class="pre">Corpus</span></code></a> is in more detail. But essentially,
+it operates as an index that stores our text data in a way that makes it easy
+to quickly compute statistics about the how language is used
+in a set of documents and search through the documents
+themselves to hopefully find interesting patterns.</p>
+<p>The only requirement to instantiate it is a list of documents. Now that you have
+a set of documents, you can form a <code class="code docutils literal notranslate"><span class="pre">Corpus</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">text_data</span>
+
+<span class="n">sotu_corpus</span> <span class="o">=</span> <span class="n">text_data</span><span class="o">.</span><span class="n">Corpus</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">sotu_data</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>This indexed the State of the Union speeches. From here, you can conduct some introductory
+exploratory analysis.</p>
+<p>To start off, let’s just compute a couple of simple statistics to learn more about
+our data. It will be helpful, for instance, if we know how many words our corpus has:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sotu_corpus</span><span class="o">.</span><span class="n">num_words</span>
+<span class="go">1786621</span>
+</pre></div>
+</div>
+<p>Similarly, here’s how many unique words there are:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sotu_corpus</span><span class="o">.</span><span class="n">vocab_size</span>
+<span class="go">24927</span>
+</pre></div>
+</div>
+<p>And here are the five most common words:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sotu_corpus</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="go">[(&#39;the&#39;, 149615), (&#39;of&#39;, 96394), (&#39;and&#39;, 60703), (&#39;to&#39;, 60642), (&#39;in&#39;, 38521)]</span>
+</pre></div>
+</div>
+<p>All of this stuff pans out; our most common words are, in fact, common and
+there are far more words in our corpus than there are unique words.</p>
+<p>But the core of this library, and the core of text analysis, lies in analyzing
+more than a couple of words.</p>
+<p><code class="code docutils literal notranslate"><span class="pre">text_data</span></code> offers a number of ways to analyze a million words of text,
+but I’ll start with one of
+its graphical tools. If you have the optional dependencies installed, you
+can create a histogram. This code will build a histogram showing
+the number of words in all of the documents.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">text_data</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span>
+<span class="go">        list(sotu_corpus.doc_lengths.values()),</span>
+<span class="go">        x_label=&quot;Document Length&quot;</span>
+<span class="go">    )</span>
+</pre></div>
+</div>
+<img alt="A historgram showing the lengths of documents across the corpus." src="_images/doc-length-hist.png" />
+<p>There’s a lot to go over in this graphic, but something that should stick out eventually
+is that one of the values appears to be 0, meaning there are no words in the entire document.</p>
+<p>You can further validate this and pin down the document causing the problem:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">sotu_corpus</span><span class="o">.</span><span class="n">doc_lengths</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])[:</span><span class="mi">3</span><span class="p">]</span>
+<span class="go">[(80, 0), (214, 1374), (62, 1505)]</span>
+</pre></div>
+</div>
+<p>There’s a document with the index of 80 that has 0
+words in it. If you go to the original data on Kaggle, you can see
+that the data is blank there.</p>
+<p>Since there’s nothing we can do to fix this issue, let’s just delete
+this record. We should also delete the record from <code class="code docutils literal notranslate"><span class="pre">pandas</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sotu_corpus</span><span class="o">.</span><span class="n">split_off</span><span class="p">({</span><span class="mi">80</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sotu_data</span> <span class="o">=</span> <span class="n">sotu_data</span><span class="p">[</span><span class="o">~</span><span class="n">sotu_data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">isin</span><span class="p">({</span><span class="mi">80</span><span class="p">})]</span>
+</pre></div>
+</div>
+<p>But as we’ll soon see, there are problems on our end, as well.
+In order to illustrate those, I’m going to compute something called
+a term-document matrix of TF-IDF scores across the corpus. Roughly
+speaking, this finds how frequently words occur in each of the documents
+in our corpus and normalizes those frequencies based on how often
+the words appear in other documents. By doing this, we can generally
+gauge what makes each document distinct from the rest of the documents
+in the corpus.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tfidf</span> <span class="o">=</span> <span class="n">sotu_corpus</span><span class="o">.</span><span class="n">tfidf_matrix</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">top_words</span><span class="p">,</span> <span class="n">_top_scores</span> <span class="o">=</span> <span class="n">sotu_corpus</span><span class="o">.</span><span class="n">get_top_words</span><span class="p">(</span><span class="n">tfidf</span><span class="p">,</span> <span class="n">top_n</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">top_words</span><span class="o">.</span><span class="n">flatten</span><span class="p">()))</span>
+</pre></div>
+</div>
+<p>I’m not going to show the entire list, because it’s very long. But suffice to
+say there are a lot of words that look like this:</p>
+<ul class="simple">
+<li><p>1924</p></li>
+<li><p>1958</p></li>
+<li><p>2005</p></li>
+</ul>
+<p>In other words, the thing we’re using to split up words is holding onto way
+too many years. If we’re trying to figure out what makes one president’s
+speeches different from another’s, what distinguishes one speech from another,
+or even what makes two documents similar, words like this risk getting in our
+way.</p>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<p>This kind of exploratory analysis — running quick spot checks to identify
+problem spots in how you’ve tokenized text and to identify places where, say,
+a document just appears blank for some reason — is an important step in analyzing
+text data. <code class="code docutils literal notranslate"><span class="pre">text_data</span></code> tries to make this process as easy as possible, by
+providing graphical tools to allow you to visualize you findings, statistical calculations
+to help you conduct your analysis, and search tools to help you make sense of the text
+you’re reading.</p>
+<p>In the next part, I’ll go over how you can write tokenizers to better
+handle your text data and how you can split up your corpus
+so you can analyze parts of it separately.</p>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2020, Max Lee.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

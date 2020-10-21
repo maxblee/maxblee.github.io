@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exploring Text Data &#8212; Text Data 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/katex-math.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
+    <script src="_static/katex_autorenderer.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="text_data" href="modules.html" />
+    <link rel="prev" title="Corpus Structure" href="corpus.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          Text Data</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Max Lee Documentation Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_structure.html">How <code class="code docutils literal notranslate"><span class="pre">text_data</span></code> is organized</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="corpus.html">Corpus Structure</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Exploring Text Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">text_data</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Exploring Text Data</a><ul>
+<li><a class="reference internal" href="#searching-through-documents">Searching Through Documents</a></li>
+<li><a class="reference internal" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="corpus.html" title="Previous Chapter: Corpus Structure"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Corpus Structure</span>
+    </a>
+  </li>
+  <li>
+    <a href="modules.html" title="Next Chapter: text_data"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">text_data &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="_sources/exploration.rst.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  <div class="section" id="exploring-text-data">
+<span id="exploration"></span><h1>Exploring Text Data<a class="headerlink" href="#exploring-text-data" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="searching-through-documents">
+<h2>Searching Through Documents<a class="headerlink" href="#searching-through-documents" title="Permalink to this headline">¶</a></h2>
+<p>While looking at numbers can be interesting, it’s also important
+to make sure that you look at the underlying text when you conduct your
+analysis. For instance, while you could show how often Buchanan and Lincoln
+talked about slavery in their State of the Union addresses, the numbers alone
+don’t tell much of the story.</p>
+<p>As your analysis could show, Buchanan actually mentioned slavery in a larger
+percentage of his speeches than Lincoln did:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">slavery_document</span> <span class="o">=</span> <span class="n">text_data</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">render_bar_chart</span><span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s2">&quot;Lincoln&quot;</span><span class="p">,</span> <span class="s2">&quot;Buchanan&quot;</span><span class="p">]),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">lincoln_corpus</span><span class="o">.</span><span class="n">document_frequency</span><span class="p">(</span><span class="s2">&quot;slavery&quot;</span><span class="p">),</span> <span class="n">buchanan_corpus</span><span class="o">.</span><span class="n">document_frequency</span><span class="p">(</span><span class="s2">&quot;slavery&quot;</span><span class="p">)])</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<img alt="A bar chart showing that Buchanan mentioned slavery in a larger percentage of his State of the Union speeches than Lincoln." src="_images/buchanan-lincoln-slavery.svg" /><p>But a quick glance at the raw text will show how different the language
+Buchanan used was from the language Lincoln used. <code class="code docutils literal notranslate"><span class="pre">text_data</span></code> makes it
+easy to make those glances:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lincoln_corpus</span><span class="o">.</span><span class="n">display_search_results</span><span class="p">(</span><span class="s2">&quot;slavery&quot;</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><b>Showing Result 0 (Document ID 0)</b></p><p style='white-space=pre-wrap;'><b>&hellip;</b>tates\nadopting abolishment of <b>slavery</b>, but in such way that no slave shall be\ntwice accounted for.\n\nART.--Congress may appropriate money and otherwise provide for\ncolonizing free colored persons with their own consent at any place or\nplaces without the United States. I beg indulgence to discuss these\nproposed articles at some length. Without <b>slavery</b> the rebellion could\nnever have existed; without <b>slavery</b> it could not continue.\n\nAmong the friends of the Union there is great diversity of sentiment\nand of policy in regard to <b>slavery</b> and the African race amongst us.\nSome would perpetuate <b>slavery</b>; some would abolish it suddenly and\nwithout compensation; some would abolish it gradually and with\ncompensation: some would remove the freed people from us, and some\nwould retain them with us; and there are y<b>&hellip;</b></p><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">buchanan_corpus</span><span class="o">.</span><span class="n">display_search_results</span><span class="p">(</span><span class="s2">&quot;slavery&quot;</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><b>Showing Result 0 (Document ID 0)</b></p><p style='white-space=pre-wrap;'><b>&hellip;</b> of events the inhabitants of any Territory shall have\nreached the number required to form a State, they will then proceed in a\nregular manner and in the exercise of the rights of popular sovereignty to\nform a constitution preparatory to admission into the Union. After this has\nbeen done, to employ the language of the Kansas and Nebraska act, they\n&quot;shall be received into the Union with or without <b>slavery</b>, as their\nconstitution may prescribe at the time of their admission.&quot; This sound\nprinciple has happily been recognized in some form or other by an almost\nunanimous vote of both Houses of the last Congress.\n\nAll lawful means at my command have been employed, and shall continue to be\nemployed, to execute the laws against the African slave trade. After a most\ncareful and rigorous examination of our <b>&hellip;</b></p><p><b>Showing Result 1 (Document ID 3)</b></p><p style='white-space=pre-wrap;'><b>&hellip;</b>een subverted. A provisional government having been instituted\nunder circumstances which promise durability, it has been formally\nrecognized.\n\nI have been reluctantly obliged to ask explanation and satisfaction for\nnational injuries committed by the President of Hayti. The political\nand social condition of the Republics of Hayti and St. Domingo is very\nunsatisfactory and painful. The abolition of <b>slavery</b>, which has been\ncarried into effect throughout the island of St. Domingo and the entire\nWest Indies, except the Spanish islands of Cuba and Porto Rico, has\nbeen followed by a profound popular conviction of the rightfulness of\nrepublican institutions and an intense desire to secure them. The\nattempt, however, to establish republics there encounters many\nobstacles, most of which may be supposed to <b>&hellip;</b></p><p>Conducting an analysis on <code class="code docutils literal notranslate"><span class="pre">n=3</span></code> is, of course, never a good idea, regardless of the context.
+But <code class="code docutils literal notranslate"><span class="pre">text_data</span></code> makes searching through your documents easy so you can spot holes in your
+analyses or better understand the context for why you keep seeing a really weird word or phrase
+in a document set.</p>
+<p>More complicated searches are available, too. <code class="code docutils literal notranslate"><span class="pre">text_data</span></code> has support for
+writing arbitrarily long phrase queries or for combining queries.</p>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<p>This getting started guide hopefully gave you a brief foray into the things
+<code class="code docutils literal notranslate"><span class="pre">text_data</span></code> does. The intention with this guide was to explain the goals
+of the library and contextualize it in an example data analysis project and hopefully
+give you some ideas about how you might incorporate the tool into a project.</p>
+<p>The API for the library is next. That has more detailed usage guides in it.</p>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2020, Max Lee.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

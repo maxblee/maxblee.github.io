@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Corpus Structure &#8212; Text Data 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/katex-math.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
+    <script src="_static/katex_autorenderer.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Exploring Text Data" href="exploration.html" />
+    <link rel="prev" title="Getting Started" href="getting_started.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          Text Data</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Max Lee Documentation Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_structure.html">How <code class="code docutils literal notranslate"><span class="pre">text_data</span></code> is organized</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Corpus Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exploration.html">Exploring Text Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">text_data</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Corpus Structure</a><ul>
+<li><a class="reference internal" href="#an-introduction-to-the-corpus">An Introduction to the <code class="xref py py-class docutils literal notranslate"><span class="pre">Corpus</span></code></a></li>
+<li><a class="reference internal" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="getting_started.html" title="Previous Chapter: Getting Started"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Getting Started</span>
+    </a>
+  </li>
+  <li>
+    <a href="exploration.html" title="Next Chapter: Exploring Text Data"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Exploring Text Data &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="_sources/corpus.rst.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  <div class="section" id="corpus-structure">
+<span id="corpus"></span><h1>Corpus Structure<a class="headerlink" href="#corpus-structure" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="an-introduction-to-the-corpus">
+<h2>An Introduction to the <a class="reference internal" href="text_data.html#text_data.index.Corpus" title="text_data.index.Corpus"><code class="xref py py-class docutils literal notranslate"><span class="pre">Corpus</span></code></a><a class="headerlink" href="#an-introduction-to-the-corpus" title="Permalink to this headline">¶</a></h2>
+<p>In <a class="reference internal" href="getting_started.html#getting-started"><span class="std std-ref">Getting Started</span></a>, I showed a brief tour into how you
+can use <code class="code docutils literal notranslate"><span class="pre">text_data</span></code> to identify potential problems in your
+analysis. Now, I want to go over how you can address those.</p>
+<p>In addition to allowing you to enter a list of text documents,
+<a class="reference internal" href="text_data.html#text_data.index.Corpus" title="text_data.index.Corpus"><code class="xref py py-class docutils literal notranslate"><span class="pre">Corpus</span></code></a> objects allow you to enter tokenizers
+when you initialize them. These tokenizers — so called because
+they convert strings into a list of “tokens” — are fairly picky
+in how they have to be initialized because of some of the search
+features in <a class="reference internal" href="text_data.html#text_data.index.Corpus" title="text_data.index.Corpus"><code class="xref py py-class docutils literal notranslate"><span class="pre">Corpus</span></code></a>. For full details,
+see the <a class="reference internal" href="text_data.html#module-text_data.tokenize" title="text_data.tokenize"><code class="xref py py-mod docutils literal notranslate"><span class="pre">text_data.tokenize</span></code></a> module.</p>
+<p>But the configuration you should generally be able to get away with
+is illustrated in <a class="reference internal" href="text_data.html#text_data.tokenize.corpus_tokenizer" title="text_data.tokenize.corpus_tokenizer"><code class="xref py py-func docutils literal notranslate"><span class="pre">text_data.tokenize.corpus_tokenizer()</span></code></a>.
+This function accepts a regular expression pattern that will
+split your text into a list of strings and a list of postprocessing
+functions that will alter each item in that list of strings,
+including by removing them. In our case, we noticed
+that the default tokenizer <a class="reference internal" href="text_data.html#text_data.index.Corpus" title="text_data.index.Corpus"><code class="xref py py-class docutils literal notranslate"><span class="pre">Corpus</span></code></a> uses,
+which just splits on <code class="code docutils literal notranslate"><span class="pre">r&quot;\w+&quot;</span></code> regular expressions
+kept onto a bunch of numbers that we didn’t want. So let’s change the
+regular expression to only hold onto alphabetic words.</p>
+<p>In addition there were a a few 1- or 2-letter words that didn’t
+really seem to convey much meaning and that felt to me like
+they were possibly artifacts of bad tokenizing. (Specifically,
+the default tokenizer will often handle apostrophes poorly.)
+I’m going to address those by removing them from the data. If any
+of your postprocessing functions returns <code class="code docutils literal notranslate"><span class="pre">None</span></code>,
+<a class="reference internal" href="text_data.html#text_data.tokenize.corpus_tokenizer" title="text_data.tokenize.corpus_tokenizer"><code class="xref py py-func docutils literal notranslate"><span class="pre">text_data.tokenize.corpus_tokenizer()</span></code></a> will simply remove them
+from the final list of words.</p>
+<p>So now, we’re going to re-tokenize that original database, using a custom
+tokenizer:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sotu_tokenizer</span> <span class="o">=</span> <span class="n">text_data</span><span class="o">.</span><span class="n">tokenize</span><span class="o">.</span><span class="n">corpus_tokenizer</span><span class="p">(</span>
+    <span class="sa">r</span><span class="s2">&quot;[A-Za-z]+&quot;</span><span class="p">,</span>
+    <span class="p">[</span><span class="nb">str</span><span class="o">.</span><span class="n">lower</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="k">else</span> <span class="kc">None</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">sotu_corpus</span> <span class="o">=</span> <span class="n">Corpus</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">sotu_data</span><span class="o">.</span><span class="n">speech</span><span class="p">),</span> <span class="n">sotu_tokenizer</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now, we can do the same thing we did before, looking at the TF-IDF
+values across the corpus.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tfidf</span> <span class="o">=</span> <span class="n">sotu_corpus</span><span class="o">.</span><span class="n">tfidf_matrix</span><span class="p">()</span>
+<span class="n">top_words</span><span class="p">,</span> <span class="n">top_scores</span> <span class="o">=</span> <span class="n">sotu_corpus</span><span class="o">.</span><span class="n">get_top_words</span><span class="p">(</span><span class="n">tfidf</span><span class="p">,</span> <span class="n">top_n</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">top_words</span><span class="o">.</span><span class="n">flatten</span><span class="p">()))</span>
+</pre></div>
+</div>
+<p>There’s still more tinkering that you could do — in a real project,
+I might consider using WordNet, a tool that helps you reduce
+words like “dogs” and “cats” into their root forms — but the results
+I got look pretty decent, and are certainly better than what we had
+before.</p>
+<p>So with that in mind, I want to get started on the analysis task I have.
+In particular, I want to see how Abraham Lincoln’s speeches differed from his predecessor,
+James Buchanan’s. In order to do this, we’re going to use two functions offered
+by <code class="code docutils literal notranslate"><span class="pre">text_data</span></code> that help you morph your index into another index that’s more
+suitable for your analyis task.</p>
+<p>This is really useful in text analysis, because
+you’re often dealing with vague and changing definitions of what counts as a corpus.
+Sometimes, you want to compare a document to all other documents in a corpus; sometimes,
+you want to compare it to just one other document. And other times, as we’re going
+to do, you want to group a bunch of documents together and treat them as if they’re a single
+document.</p>
+<p>We’re going to use one function called <a class="reference internal" href="text_data.html#text_data.index.WordIndex.slice" title="text_data.index.WordIndex.slice"><code class="xref py py-meth docutils literal notranslate"><span class="pre">text_data.index.WordIndex.slice()</span></code></a>
+and another called <a class="reference internal" href="text_data.html#text_data.multi_corpus.flat_concat" title="text_data.multi_corpus.flat_concat"><code class="xref py py-meth docutils literal notranslate"><span class="pre">text_data.multi_corpus.flat_concat()</span></code></a> to do this.
+<a class="reference internal" href="text_data.html#text_data.index.WordIndex.slice" title="text_data.index.WordIndex.slice"><code class="xref py py-meth docutils literal notranslate"><span class="pre">text_data.index.WordIndex.slice()</span></code></a> creates a new <a class="reference internal" href="text_data.html#text_data.index.Corpus" title="text_data.index.Corpus"><code class="xref py py-class docutils literal notranslate"><span class="pre">Corpus</span></code></a>
+object with the indexes we specify, while <a class="reference internal" href="text_data.html#text_data.multi_corpus.flat_concat" title="text_data.multi_corpus.flat_concat"><code class="xref py py-meth docutils literal notranslate"><span class="pre">text_data.multi_corpus.flat_concat()</span></code></a>
+combines and flattens a bunch of <a class="reference internal" href="text_data.html#text_data.index.Corpus" title="text_data.index.Corpus"><code class="xref py py-class docutils literal notranslate"><span class="pre">Corpus</span></code></a> objects.</p>
+<p>To start, let’s find all of the speeches that either Obama or Bush gave:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lincoln</span> <span class="o">=</span> <span class="n">sotu_data</span><span class="p">[</span><span class="n">sotu_data</span><span class="o">.</span><span class="n">president</span> <span class="o">==</span> <span class="s2">&quot;Lincoln&quot;</span><span class="p">]</span>
+<span class="n">buchanan</span> <span class="o">=</span> <span class="n">sotu_data</span><span class="p">[</span><span class="n">sotu_data</span><span class="o">.</span><span class="n">president</span> <span class="o">==</span> <span class="s2">&quot;Buchanan&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>We could technically just instantiate these corpuses, much as we did to get
+our entire corpus. But doing so would require tokenizing the corpuses again,
+which would be slow. So let’s instead create them using <a class="reference internal" href="text_data.html#text_data.index.WordIndex.slice" title="text_data.index.WordIndex.slice"><code class="xref py py-meth docutils literal notranslate"><span class="pre">text_data.index.WordIndex.slice()</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">buchanan_corpus</span> <span class="o">=</span> <span class="n">sotu_corpus</span><span class="o">.</span><span class="n">slice</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">buchanan</span><span class="o">.</span><span class="n">index</span><span class="p">))</span>
+<span class="n">lincoln_corpus</span> <span class="o">=</span> <span class="n">sotu_corpus</span><span class="o">.</span><span class="n">slice</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">lincoln</span><span class="o">.</span><span class="n">index</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>And finally, let’s combine these into a class called a <a class="reference internal" href="text_data.html#text_data.index.WordIndex" title="text_data.index.WordIndex"><code class="xref py py-class docutils literal notranslate"><span class="pre">WordIndex</span></code></a>.
+Essentially, this is the same thing as a <a class="reference internal" href="text_data.html#text_data.index.Corpus" title="text_data.index.Corpus"><code class="xref py py-class docutils literal notranslate"><span class="pre">Corpus</span></code></a>, with the caveat
+that we can’t use the search functions I’ll write about later.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">both</span> <span class="o">=</span> <span class="n">text_data</span><span class="o">.</span><span class="n">multi_corpus</span><span class="o">.</span><span class="n">flat_concat</span><span class="p">(</span><span class="n">lincoln_corpus</span><span class="p">,</span> <span class="n">buchanan_corpus</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now, we can see what words distinguish Lincoln’s State of the Union speeches from
+Buchanan’s.</p>
+<p>To conduct the analysis, I’m going to use something called a log-odds ratio.
+It’s explained really well in <a class="reference external" href="http://languagelog.ldc.upenn.edu/myl/Monroe.pdf">this paper</a>.
+(That paper also conveys its limits; specifically, log-odds ratios do a poor job
+of representing variance, but it’s a decent metric for an introductory analysis.)</p>
+<p>There’s a bit more explanation of what a log-odds ratio is in the documentation
+for <a class="reference internal" href="text_data.html#text_data.index.WordIndex.odds_word" title="text_data.index.WordIndex.odds_word"><code class="xref py py-meth docutils literal notranslate"><span class="pre">text_data.index.WordIndex.odds_word()</span></code></a>. But making the computation itself
+is easy:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">log_odds</span> <span class="o">=</span> <span class="n">both</span><span class="o">.</span><span class="n">odds_matrix</span><span class="p">(</span><span class="n">sublinear</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">log_odds_ratio</span> <span class="o">=</span> <span class="n">log_odds</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">log_odds</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>And from there, we can visualize our findings by viewing the top 10 scoring
+results from each candidate:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">words</span><span class="p">,</span> <span class="n">sorted_log_odds</span> <span class="o">=</span> <span class="n">both</span><span class="o">.</span><span class="n">get_top_words</span><span class="p">(</span><span class="n">log_odds_ratio</span><span class="p">)</span>
+<span class="n">lincoln_words</span><span class="p">,</span> <span class="n">top_lincoln</span> <span class="o">=</span> <span class="n">words</span><span class="p">[:</span><span class="mi">10</span><span class="p">],</span> <span class="n">sorted_log_odds</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+<span class="n">buchanan_words</span><span class="p">,</span> <span class="n">top_buchanan</span> <span class="o">=</span> <span class="n">words</span><span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">:],</span> <span class="n">sorted_log_odds</span><span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">:]</span>
+<span class="n">text_data</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">display_score_table</span><span class="p">(</span>
+    <span class="n">buchanan_words</span><span class="p">,</span>
+    <span class="n">top_buchanan</span><span class="p">,</span>
+    <span class="s2">&quot;Words Buchanan Used Disproportionately&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p><b>Words Buchanan Used Disproportionately</b></p><table><thead><tr><th>Order</th><th>Word</th><th>Score</th></tr></thead><tbody><tr><td>1.</td><td>applied</td><td>-2.357841079138746</td></tr><tr><td>2.</td><td>conferred</td><td>-2.357841079138746</td></tr><tr><td>3.</td><td>silver</td><td>-2.357841079138746</td></tr><tr><td>4.</td><td>estimates</td><td>-2.4060753023089525</td></tr><tr><td>5.</td><td>company</td><td>-2.4060753023089525</td></tr><tr><td>6.</td><td>five</td><td>-2.4060753023089525</td></tr><tr><td>7.</td><td>employ</td><td>-2.4478979344312997</td></tr><tr><td>8.</td><td>whilst</td><td>-2.4847150241025275</td></tr><tr><td>9.</td><td>gold</td><td>-2.4847150241025275</td></tr><tr><td>10.</td><td>paraguay</td><td>-2.5738843074966002</td></tr></tbody></table><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">text_data</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">display_score_table</span><span class="p">(</span>
+    <span class="n">lincoln_words</span><span class="p">,</span>
+    <span class="n">top_lincoln</span><span class="p">,</span>
+    <span class="s2">&quot;Words Lincoln Used Disproportionately&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p><b>Words Lincoln Used Disproportionately</b></p><table><thead><tr><th>Order</th><th>Word</th><th>Score</th></tr></thead><tbody><tr><td>1.</td><td>emancipation</td><td>2.570928440185467</td></tr><tr><td>2.</td><td>space</td><td>2.4761184382773784</td></tr><tr><td>3.</td><td>agriculture</td><td>2.4465802463270254</td></tr><tr><td>4.</td><td>production</td><td>2.4137697411322385</td></tr><tr><td>5.</td><td>forward</td><td>2.335130804296506</td></tr><tr><td>6.</td><td>wages</td><td>2.335130804296506</td></tr><tr><td>7.</td><td>above</td><td>2.335130804296506</td></tr><tr><td>8.</td><td>run</td><td>2.2868970418386674</td></tr><tr><td>9.</td><td>propose</td><td>2.2868970418386674</td></tr><tr><td>10.</td><td>length</td><td>2.2868970418386674</td></tr></tbody></table><p>You can see the difference between the two presidents immediately.
+One of the words Buchanan uses disproportionately is “paraguay,”
+likely a reference to Buchanan’s attempt to annex Paraguay. Meanwhile,
+one of Lincoln’s most disproportionately used words is “emancipation,”
+for obvious reasons.</p>
+<p>But we can extend this analysis further by looking at bi-grams.
+In natural language processing, a “bigram,” is a two-word phrase
+that’s treated like a word.</p>
+<p>Using <code class="code docutils literal notranslate"><span class="pre">text_data</span></code>, we can create indexes for any ngram we want
+from within a <code class="xref py py-class docutils literal notranslate"><span class="pre">Corpus</span></code> object. We can then access
+the n-grams from within the corpus’s <code class="code docutils literal notranslate"><span class="pre">ngram_indexes</span></code> attribute.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lincoln_corpus</span><span class="o">.</span><span class="n">add_ngram_index</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">buchanan_corpus</span><span class="o">.</span><span class="n">add_ngram_index</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">both_bigram</span> <span class="o">=</span> <span class="n">text_data</span><span class="o">.</span><span class="n">multi_corpus</span><span class="o">.</span><span class="n">flat_concat</span><span class="p">(</span>
+    <span class="n">lincoln_corpus</span><span class="o">.</span><span class="n">ngram_indexes</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+    <span class="n">buchanan_corpus</span><span class="o">.</span><span class="n">ngram_indexes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">log_odds_bigram</span> <span class="o">=</span> <span class="n">both_bigram</span><span class="o">.</span><span class="n">odds_matrix</span><span class="p">(</span><span class="n">sublinear</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">log_odds_ratio_bigram</span> <span class="o">=</span> <span class="n">log_odds_bigram</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">log_odds_bigram</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">bigrams</span><span class="p">,</span> <span class="n">sorted_log_odds_bigram</span> <span class="o">=</span> <span class="n">both_bigram</span><span class="o">.</span><span class="n">get_top_words</span><span class="p">(</span><span class="n">log_odds_ratio_bigram</span><span class="p">)</span>
+<span class="n">lincoln_bigrams</span><span class="p">,</span> <span class="n">top_lincoln_bigrams</span> <span class="o">=</span> <span class="n">bigrams</span><span class="p">[:</span><span class="mi">10</span><span class="p">],</span> <span class="n">sorted_log_odds_bigram</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+<span class="n">buchanan_bigrams</span><span class="p">,</span> <span class="n">top_buchanan_bigrams</span> <span class="o">=</span> <span class="n">bigrams</span><span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">:],</span> <span class="n">sorted_log_odds_bigram</span><span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">:]</span>
+<span class="n">text_data</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">display_score_table</span><span class="p">(</span>
+    <span class="n">lincoln_bigrams</span><span class="p">,</span>
+    <span class="n">top_lincoln_bigrams</span><span class="p">,</span>
+    <span class="s2">&quot;Bigrams Lincoln Used Disproportionately&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p><b>Bigrams Lincoln Used Disproportionately</b></p><table><thead><tr><th>Order</th><th>Word</th><th>Score</th></tr></thead><tbody><tr><td>1.</td><td>the measure</td><td>2.159969068846104</td></tr><tr><td>2.</td><td>free colored</td><td>2.159969068846104</td></tr><tr><td>3.</td><td>population and</td><td>2.159969068846104</td></tr><tr><td>4.</td><td>the railways</td><td>2.159969068846104</td></tr><tr><td>5.</td><td>which our</td><td>2.159969068846104</td></tr><tr><td>6.</td><td>the price</td><td>2.159969068846104</td></tr><tr><td>7.</td><td>the foreign</td><td>2.074724307333117</td></tr><tr><td>8.</td><td>agriculture the</td><td>2.074724307333117</td></tr><tr><td>9.</td><td>products and</td><td>2.074724307333117</td></tr><tr><td>10.</td><td>white labor</td><td>2.074724307333117</td></tr></tbody></table><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">text_data</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">display_score_table</span><span class="p">(</span>
+    <span class="n">buchanan_bigrams</span><span class="p">,</span>
+    <span class="n">top_buchanan_bigrams</span><span class="p">,</span>
+    <span class="s2">&quot;Bigrams Buchanan Used Disproportionately&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p><b>Bigrams Buchanan Used Disproportionately</b></p><table><thead><tr><th>Order</th><th>Word</th><th>Score</th></tr></thead><tbody><tr><td>1.</td><td>president and</td><td>-2.3591582598672822</td></tr><tr><td>2.</td><td>june the</td><td>-2.3591582598672822</td></tr><tr><td>3.</td><td>the ordinary</td><td>-2.3591582598672822</td></tr><tr><td>4.</td><td>three hundred</td><td>-2.407380077115034</td></tr><tr><td>5.</td><td>the capital</td><td>-2.4491916115755874</td></tr><tr><td>6.</td><td>hundred and</td><td>-2.4859986620392682</td></tr><tr><td>7.</td><td>present fiscal</td><td>-2.5188003424008407</td></tr><tr><td>8.</td><td>the constitutional</td><td>-2.548330416191556</td></tr><tr><td>9.</td><td>the island</td><td>-2.5751425427204833</td></tr><tr><td>10.</td><td>ending june</td><td>-2.6976458268603114</td></tr></tbody></table><p>Now, we can clearly see the influence of the Civil War in the differences
+between the two presidents’ speeches, with Licoln clearly making repeated references
+to the war.</p>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<p>This illustrates how you can analyze text data to compare the language across
+two sets of documents. <code class="code docutils literal notranslate"><span class="pre">text_data</span></code> offers a large number of tools for
+concatenating and slicing data, making it easy to explore data
+and compare the language used in a document set between different groups of people.</p>
+<p>In the next section, I’ll talk about how you can search through results
+to get a better sense of the context in which certain language was used.</p>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2020, Max Lee.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

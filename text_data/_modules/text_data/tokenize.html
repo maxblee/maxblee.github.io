@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>text_data.tokenize &#8212; Text Data 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/katex-math.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
+    <script src="../../_static/katex_autorenderer.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../../_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html">
+          Text Data</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../index.html">Max Lee Documentation Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_structure.html">How <code class="code docutils literal notranslate"><span class="pre">text_data</span></code> is organized</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../corpus.html">Corpus Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../exploration.html">Exploring Text Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">text_data</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"></ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  <h1>Source code for text_data.tokenize</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;This is a module for tokenizing data.</span>
+
+<span class="sd">The primary motivation behind this module is that effectively</span>
+<span class="sd">presenting search results revolves around knowing the positions</span>
+<span class="sd">of the words *prior* to tokenization. In order to handle these raw</span>
+<span class="sd">positions, the index :class:`text_data.index.Corpus` uses stores the</span>
+<span class="sd">original character-level positions of words.</span>
+
+<span class="sd">This module offers a default tokenizer that you can use</span>
+<span class="sd">for :class:`text_data.index.Corpus`. However, you&#39;ll likely need to customize</span>
+<span class="sd">them for most applications. That said, doing so should not be difficult.</span>
+
+<span class="sd">One of the functions in this module, :func:`~text_data.tokenize.corpus_tokenizer`,</span>
+<span class="sd">is designed specifically to create tokenizers that can be used</span>
+<span class="sd">directly by :class:`text_data.index.Corpus`. All you have to do</span>
+<span class="sd">is create a regular expression that splits words from nonwords</span>
+<span class="sd">and then create a series of postprocessing functions to clean the</span>
+<span class="sd">text (including, optionally, removing tokens). If possible,</span>
+<span class="sd">I would recommend taking this approach, since it allows you</span>
+<span class="sd">to mostly ignore the picky preferences of the underlying API.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="n">TokenizeResult</span> <span class="o">=</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]]</span>
+
+
+<div class="viewcode-block" id="tokenize_regex_positions"><a class="viewcode-back" href="../../text_data.html#text_data.tokenize.tokenize_regex_positions">[docs]</a><span class="k">def</span> <span class="nf">tokenize_regex_positions</span><span class="p">(</span>
+    <span class="n">pattern</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">document_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">inverse_match</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TokenizeResult</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Finds all of the tokens matching a regular expression.</span>
+
+<span class="sd">    Returns the positions of those tokens along with the tokens themselves.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        pattern: A raw regular expression string</span>
+<span class="sd">        document_text: The raw document text</span>
+<span class="sd">        inverse_match: If true, tokenizes the text between matches.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A tuple consisting of the list of words and a list of tuples,</span>
+<span class="sd">        where each tuple represents the start and end character positions</span>
+<span class="sd">        of the phrase.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">spans</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">current_idx</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">regex</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="n">document_text</span><span class="p">):</span>
+        <span class="n">match_start</span><span class="p">,</span> <span class="n">match_end</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">span</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">inverse_match</span><span class="p">:</span>
+            <span class="c1"># if we don&#39;t include this, an inverse match will return a list with</span>
+            <span class="c1"># an empty string (see `tests/test_tokenizers.py::test_empty_regex_match`)</span>
+            <span class="k">if</span> <span class="n">current_idx</span> <span class="o">==</span> <span class="n">match_start</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">current_idx</span> <span class="o">=</span> <span class="n">match_end</span>
+                <span class="k">continue</span>
+            <span class="n">start_idx</span><span class="p">,</span> <span class="n">end_idx</span> <span class="o">=</span> <span class="n">current_idx</span><span class="p">,</span> <span class="n">match_start</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">start_idx</span><span class="p">,</span> <span class="n">end_idx</span> <span class="o">=</span> <span class="n">match_start</span><span class="p">,</span> <span class="n">match_end</span>
+        <span class="n">current_idx</span> <span class="o">=</span> <span class="n">match_end</span>
+        <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">document_text</span><span class="p">[</span><span class="n">start_idx</span><span class="p">:</span><span class="n">end_idx</span><span class="p">])</span>
+        <span class="n">spans</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">start_idx</span><span class="p">,</span> <span class="n">end_idx</span><span class="p">))</span>
+    <span class="c1"># in inverse matches, make sure everything that doesn&#39;t match is included</span>
+    <span class="k">if</span> <span class="n">inverse_match</span> <span class="ow">and</span> <span class="n">current_idx</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">document_text</span><span class="p">):</span>
+        <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">document_text</span><span class="p">[</span><span class="n">current_idx</span><span class="p">:])</span>
+        <span class="n">spans</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">current_idx</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">document_text</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">tokens</span><span class="p">,</span> <span class="n">spans</span></div>
+
+
+<div class="viewcode-block" id="postprocess_positions"><a class="viewcode-back" href="../../text_data.html#text_data.tokenize.postprocess_positions">[docs]</a><span class="k">def</span> <span class="nf">postprocess_positions</span><span class="p">(</span>
+    <span class="n">postprocess_funcs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]],</span>
+    <span class="n">tokenize_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="n">TokenizeResult</span><span class="p">],</span>
+    <span class="n">document</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TokenizeResult</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Runs postprocessing functions to produce final tokenized documents.</span>
+
+<span class="sd">    This function allows you to take :func:`~text_data.tokenize.tokenize_regex_positions`</span>
+<span class="sd">    (or something that has a similar function signature) and run postprocessing</span>
+<span class="sd">    on it. It requires that you also give it a document, which it will tokenize</span>
+<span class="sd">    using the tokenizing function you give it.</span>
+
+<span class="sd">    These postprocessing functions should take a string (i.e. one of the individual tokens),</span>
+<span class="sd">    but they can return either a string or None. If they return None, the token</span>
+<span class="sd">    will not appear in the final tokenized result.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        postprocess_funcs: A list of postprocessing functions (e.g. :code:`str.lower`)</span>
+<span class="sd">        tokenize_func: A function that takes raw text and converts it into</span>
+<span class="sd">            a list of strings and a list of character-level positions</span>
+<span class="sd">            (e.g. the output of :func:`text_data.tokenize.tokenize_regex_positions`)</span>
+<span class="sd">        document: The (single) text you want to tokenize.</span>
+<span class="sd">        tokenized_docs: The tokenized results</span>
+<span class="sd">            (e.g. the output of :func:`text_data.tokenize.tokenize_regex_positions`)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">post_tokens</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">post_spans</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># there&#39;s probably a more elegant way to do this, but default for a,b in x doesn&#39;t</span>
+    <span class="c1"># work here because spans is a tuple</span>
+    <span class="n">tokens</span><span class="p">,</span> <span class="n">spans</span> <span class="o">=</span> <span class="n">tokenize_func</span><span class="p">(</span><span class="n">document</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">token</span><span class="p">,</span> <span class="n">span</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">spans</span><span class="p">):</span>
+        <span class="n">func_result</span> <span class="o">=</span> <span class="n">token</span>
+        <span class="k">for</span> <span class="n">func</span> <span class="ow">in</span> <span class="n">postprocess_funcs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">func_result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">func_result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">func_result</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+        <span class="k">if</span> <span class="n">func_result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">post_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">func_result</span><span class="p">)</span>
+            <span class="n">post_spans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">span</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">post_tokens</span><span class="p">,</span> <span class="n">post_spans</span></div>
+
+
+<div class="viewcode-block" id="corpus_tokenizer"><a class="viewcode-back" href="../../text_data.html#text_data.tokenize.corpus_tokenizer">[docs]</a><span class="k">def</span> <span class="nf">corpus_tokenizer</span><span class="p">(</span>
+    <span class="n">regex_patten</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">postprocess_funcs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]],</span>
+    <span class="n">inverse_match</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="n">TokenizeResult</span><span class="p">]:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;This is designed to make it easy to build a custom tokenizer for :class:`text_data.index.Corpus`.</span>
+
+<span class="sd">    It acts as a combination of :func:`~text_data.tokenize.tokenize_regex_positions` and</span>
+<span class="sd">    :func:`~text_data.tokenize.postprocess_positions`, making it simple to create</span>
+<span class="sd">    tokenizers for :class:`text_data.index.Corpus`.</span>
+
+<span class="sd">    In other words, if you pass the tokenizer a regular expression pattern, set :code:`inverse_match`</span>
+<span class="sd">    as you would for :func:`~text_data.tokenize.tokenize_regex_positions`, and add</span>
+<span class="sd">    a list of postprocessing functions as you would for :func:`~text_data.tokenize.postprocess_positions`,</span>
+<span class="sd">    this tokenizer will return a function that you can use directly as an argument in :class:`text_data.index.Corpus`.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        Let&#39;s say that we want to build a tokenizing function that splits on vowels or whitespace.</span>
+<span class="sd">        We also want to lowercase all of the remaining words:</span>
+
+<span class="sd">        &gt;&gt;&gt; split_vowels = corpus_tokenizer(r&quot;[aeiou\s]+&quot;, [str.lower], inverse_match=True)</span>
+<span class="sd">        &gt;&gt;&gt; split_vowels(&quot;Them and you&quot;)</span>
+<span class="sd">        ([&#39;th&#39;, &#39;m&#39;, &#39;nd&#39;, &#39;y&#39;], [(0, 2), (3, 4), (6, 8), (9, 10)])</span>
+
+<span class="sd">        You can additionally use this function to remove stopwords, although</span>
+<span class="sd">        `I generally would recommend against it &lt;http://languagelog.ldc.upenn.edu/myl/Monroe.pdf&gt;`_.</span>
+<span class="sd">        The postprocessing functions optionally return a string or a :code:`NoneType`,</span>
+<span class="sd">        and :code:`None` values simply don&#39;t get tokenized:</span>
+
+<span class="sd">        &gt;&gt;&gt; skip_stopwords = corpus_tokenizer(r&quot;\w+&quot;, [lambda x: x if x != &quot;the&quot; else None])</span>
+<span class="sd">        &gt;&gt;&gt; skip_stopwords(&quot;I ran to the store&quot;)</span>
+<span class="sd">        ([&#39;I&#39;, &#39;ran&#39;, &#39;to&#39;, &#39;store&#39;], [(0, 1), (2, 5), (6, 8), (13, 18)])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tokenize_func</span> <span class="o">=</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span>
+        <span class="n">tokenize_regex_positions</span><span class="p">,</span> <span class="n">regex_patten</span><span class="p">,</span> <span class="n">inverse_match</span><span class="o">=</span><span class="n">inverse_match</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">functools</span><span class="o">.</span><span class="n">partial</span><span class="p">(</span><span class="n">postprocess_positions</span><span class="p">,</span> <span class="n">postprocess_funcs</span><span class="p">,</span> <span class="n">tokenize_func</span><span class="p">)</span></div>
+
+
+<span class="c1">#: This is the default tokenizer for :code:`text_data.index.Corpus`.</span>
+<span class="c1">#:</span>
+<span class="c1">#: It simply splits on words (:code:`&quot;\w+&quot;`) and lowercases words.</span>
+<span class="n">default_tokenizer</span> <span class="o">=</span> <span class="n">corpus_tokenizer</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\w+&quot;</span><span class="p">,</span> <span class="p">[</span><span class="nb">str</span><span class="o">.</span><span class="n">lower</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2020, Max Lee.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

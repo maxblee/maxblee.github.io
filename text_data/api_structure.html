@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How text_data is organized &#8212; Text Data 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/katex-math.css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
+    <script src="_static/katex_autorenderer.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Getting Started" href="getting_started.html" />
+    <link rel="prev" title="Installation" href="installation.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          Text Data</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.1.0</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Max Lee Documentation Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">How <code class="code docutils literal notranslate"><span class="pre">text_data</span></code> is organized</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="corpus.html">Corpus Structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exploration.html">Exploring Text Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">text_data</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">How <code class="code docutils literal notranslate"><span class="pre">text_data</span></code> is organized</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="installation.html" title="Previous Chapter: Installation"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Installation</span>
+    </a>
+  </li>
+  <li>
+    <a href="getting_started.html" title="Next Chapter: Getting Started"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Getting Started &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="_sources/api_structure.rst.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  <div class="section" id="how-text-data-is-organized">
+<span id="api-structure"></span><h1>How <code class="code docutils literal notranslate"><span class="pre">text_data</span></code> is organized<a class="headerlink" href="#how-text-data-is-organized" title="Permalink to this headline">¶</a></h1>
+<p>In the next few parts of the tutorial, I’m going to introduce
+a bunch of the tools that <code class="code docutils literal notranslate"><span class="pre">text_data</span></code> has to offer
+within the context of a mock project. My hope is that they’ll
+give you a sense of how you might introduce the library
+into your analysis.</p>
+<p>But before I do that, I want to introduce the structure of the
+library.</p>
+<p><code class="code docutils literal notranslate"><span class="pre">text_data</span></code> is built upon two classes, <a class="reference internal" href="text_data.html#text_data.index.WordIndex" title="text_data.index.WordIndex"><code class="xref py py-class docutils literal notranslate"><span class="pre">WordIndex</span></code></a>
+and <a class="reference internal" href="text_data.html#text_data.index.Corpus" title="text_data.index.Corpus"><code class="xref py py-class docutils literal notranslate"><span class="pre">Corpus</span></code></a>. The <code class="code docutils literal notranslate"><span class="pre">WordIndex</span></code>
+class indexes your documents in an efficient data structure
+and provides a number of ways for you to perform statistical lookups.
+You can see how often words are used across your entire set of documents
+or within a single option. And it supports matrix and vector operations
+that allow you to see those same statistics at a much broader scale.
+Because it uses an efficient data structure and parallelized
+Rust code, those matrix and vector operations run rapidly.</p>
+<p>In addition, <a class="reference internal" href="text_data.html#text_data.index.WordIndex" title="text_data.index.WordIndex"><code class="xref py py-class docutils literal notranslate"><span class="pre">WordIndex</span></code></a> offers a number of ways
+to split up or concatenate individual indexes you have
+so you can compare how a portion of documents compares to another portion
+of documents. This can be useful as you’re conducting a standalone
+analysis, or it can be useful if you’re trying to debug
+why a machine learning model is incorectly classifying
+some of your documents.</p>
+<p><a class="reference internal" href="text_data.html#text_data.index.Corpus" title="text_data.index.Corpus"><code class="xref py py-class docutils literal notranslate"><span class="pre">Corpus</span></code></a> builds upon the <a class="reference internal" href="text_data.html#text_data.index.WordIndex" title="text_data.index.WordIndex"><code class="xref py py-class docutils literal notranslate"><span class="pre">WordIndex</span></code></a>
+to support searching through documents. You can look up arbitrarily
+long phrases and conduct boolean <code class="code docutils literal notranslate"><span class="pre">AND</span></code>, <code class="code docutils literal notranslate"><span class="pre">NOT</span></code>, and <code class="code docutils literal notranslate"><span class="pre">OR</span></code>
+queries. In addition, <a class="reference internal" href="text_data.html#text_data.index.Corpus" title="text_data.index.Corpus"><code class="xref py py-class docutils literal notranslate"><span class="pre">Corpus</span></code></a> offers an easy
+way to index multi-word phrases.</p>
+<p>For the most part, the other portions of the library work around these
+two classes. <a class="reference internal" href="text_data.html#module-text_data.query" title="text_data.query"><code class="xref py py-mod docutils literal notranslate"><span class="pre">text_data.query</span></code></a> holds the internal support for
+building queries. It’s mainly meant as an internal data structure,
+although there are cases when you might want to use it to
+debug search results that don’t seem to be working. <a class="reference internal" href="text_data.html#module-text_data.tokenize" title="text_data.tokenize"><code class="xref py py-mod docutils literal notranslate"><span class="pre">text_data.tokenize</span></code></a>
+provides easy ways to write tokenizers (or functions that split up
+a string into a list of words, or “tokens”) that you can plug
+directly into a <code class="code docutils literal notranslate"><span class="pre">Corpus</span></code>. And <a class="reference internal" href="text_data.html#module-text_data.multi_corpus" title="text_data.multi_corpus"><code class="xref py py-mod docutils literal notranslate"><span class="pre">text_data.multi_corpus</span></code></a>
+offers two simple functions for building <code class="code docutils literal notranslate"><span class="pre">Corpus</span></code> or <code class="code docutils literal notranslate"><span class="pre">WordIndex</span></code>
+objects from a list of other <code class="code docutils literal notranslate"><span class="pre">Corpus</span></code> or <code class="code docutils literal notranslate"><span class="pre">WordIndex</span></code> objects.</p>
+<p>The only partial exception to this rule is the <a class="reference internal" href="text_data.html#module-text_data.display" title="text_data.display"><code class="xref py py-mod docutils literal notranslate"><span class="pre">text_data.display</span></code></a>
+module, which offers features for displaying data visualizations
+and top values along numpy matrixes and arrays. For the most part,
+this, too, is designed to work with the <code class="code docutils literal notranslate"><span class="pre">WordIndex</span></code> and <code class="code docutils literal notranslate"><span class="pre">Corpus</span></code>.
+But it’s flexible and accepts other numpy matrixes and arrays as its inputs.</p>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2020, Max Lee.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.2.1.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
