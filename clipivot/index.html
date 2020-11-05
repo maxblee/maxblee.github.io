@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset='utf-8'>
+	<meta name='viewport' content='width=device-width,initial-scale=1'>
+
+	<title>Pivot Table Tool</title>
+
+	<link rel='icon' type='image/png' href='/favicon.png'>
+	<link rel='stylesheet' href='/global.css'>
+	<link rel='stylesheet' href='/build/bundle.css'>
+
+	<script defer src='/build/bundle.js'></script>
+</head>
+
+<body>
+	<main>
+		<div class="content">
+			<h1>Create Pivot Tables!</h1>
+			<p class="lead">
+				<pre class="inline-highlight">
+					<code>
+						<a href="https://github.com/maxblee/clipivot">clipivot</a>
+					</code>
+				</pre>
+			is a tool I built to create pivot tables from the command-line. It's designed
+			to work nicely with other command-line tools like
+			<pre class="inline-highlight"><code>xsv</code></pre>.
+			</p>
+			<p>If you want to get started using the tool,
+				visit the <a href="https://github.com/maxblee/clipivot">GitHub repository.</a>
+				That page has all of the usage documentation along with pre-compiled
+				binaries.
+			</p>
+			<p>
+				But I also wanted to demonstrate what the tool does. So this web page
+				allows you to configure settings for your pivot table. You can
+				see the command you'd have to run,
+				you can see the output you'd expect to get as an HTML table, and you can download
+				the actual CSV file.
+			</p>
+			<p>
+				Note that this is primarily a tool to display the workings of
+				clipivot. Its
+				performance is quite poor, and you are likely to run into memory issues
+				if you try to run especially large files on it.
+			</p>
+			<div class="form-container">
+				<h2>Configure your pivot table</h2>
+				<div id="clipivot-entry"></div>
+			</div>
+		</div>
+	</main>
+</body>
+</html>
